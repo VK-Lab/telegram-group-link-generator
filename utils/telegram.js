@@ -1,5 +1,5 @@
 const https = require('https');
-const { telegramApiBase } = require('../config');
+const { telegramApiBase, presetExpirations } = require('../config');
 
 /**
  * Generate an invite link for a Telegram group
@@ -16,7 +16,8 @@ async function generateInviteLink({ token, groupId, expireHours, memberLimit }) 
     });
 
     if (expireHours) {
-        params.append('expire_date', Math.floor(Date.now() / 1000 + expireHours * 3600));
+        const hours = typeof expireHours === 'string' ? presetExpirations[expireHours] : expireHours;
+        params.append('expire_date', Math.floor(Date.now() / 1000 + hours * 3600));
     }
 
     if (memberLimit) {

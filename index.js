@@ -11,7 +11,7 @@ program
     .description('Generate Telegram invite links for private groups')
     .option('-t, --token <token>', 'Telegram Bot API token')
     .option('-g, --group <groupId>', 'Telegram group ID (can be negative)')
-    .option('-e, --expires <hours>', 'Link expiration time in hours (optional)', parseInt)
+    .option('-e, --expires <time>', 'Link expiration time (use number of hours or preset: 24h, 7d, 30d)')
     .option('-m, --member-limit <limit>', 'Maximum number of users that can join (optional)', parseInt)
     .parse(process.argv);
 

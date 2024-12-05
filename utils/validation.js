@@ -1,4 +1,4 @@
-const { maxMemberLimit, maxExpireHours } = require('../config');
+const { maxMemberLimit, maxExpireHours, presetExpirations } = require('../config');
 
 /**
  * Validate user input
@@ -19,11 +19,20 @@ function validateInput(options) {
     }
 
     if (options.expires !== undefined) {
-        if (isNaN(options.expires) || options.expires <= 0) {
-            return 'Expiration time must be a positive number';
-        }
-        if (options.expires > maxExpireHours) {
-            return `Expiration time cannot exceed ${maxExpireHours} hours`;
+        if (typeof options.expires === 'string') {
+            // Try to parse as number first
+            const numericValue = parseInt(options.expires);
+            if (!isNaN(numericValue)) {
+                if (numericValue <= 0) {
+                    return 'Expiration time must be a positive number';
+                }
+                if (numericValue > maxExpireHours) {
+                    return `Expiration time cannot exceed ${maxExpireHours} hours`;
+                }
+            } else if (!presetExpirations[options.expires]) {
+                // If not a number, check if it's a valid preset
+                return `Invalid expiration. Use hours (e.g., 48) or presets: ${Object.keys(presetExpirations).join(', ')}`;
+            }
         }
     }
 

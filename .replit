@@ -1,0 +1,51 @@
+modules = ["nodejs-20"]
+
+[nix]
+channel = "stable-24_05"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Telegram Invite Link Generator"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Get Group ID"
+
+[[workflows.workflow]]
+name = "Telegram Invite Link Generator"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node index.js --help"
+
+[[workflows.workflow]]
+name = "Get Group ID"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node utils/get-group-id.js"
+
+[deployment]
+run = ["sh", "-c", "node index.js --help"]

@@ -20,7 +20,7 @@ A command-line tool to generate invite links for private Telegram groups with cu
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/telegram-invite-link-generator.git
+git clone https://github.com/VK-Lab/telegram-group-link-generator.git
 cd telegram-invite-link-generator
 ```
 
